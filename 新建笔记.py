@@ -11,9 +11,9 @@ def create_post():
         print("❌ 标题不能为空！")
         return
 
-    cat1 = input("👉 2. 请输入主分类 (默认: 学习笔记): ").strip() or "学习笔记"
+    cat1 = input("👉 2. 请输入主分类 (默认: 力扣刷题): ").strip() or "力扣刷题"
     cat2 = input("👉 3. 请输入子分类 (可选，直接回车则无子分类): ").strip()
-    tags_input = input("👉 4. 请输入标签 (用逗号分隔，默认: blog): ").strip() or "blog"
+    tags_input = input("👉 4. 请输入标签 (用逗号分隔，默认: leetcode): ").strip() or "leetcode"
 
     # 2. 获取当前时间 (东八区)
     tz = timezone(timedelta(hours=8))
