@@ -1,5 +1,5 @@
 ---
-title: 8月16日周报：从 Vibe Coding 到重新学习自己的项目
+title: 8月16日周报
 date: 2026-08-16 12:00:00 +0800
 categories: [周报]
 tags: [JobPilot, Vibe Coding, Codex, 力扣]
