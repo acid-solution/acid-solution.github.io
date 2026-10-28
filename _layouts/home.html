@@ -7,7 +7,7 @@ layout: default
 {% assign empty_posts = '' | split: '' %}
 {% assign visible_posts = site.posts | where_exp: 'post', 'post.hidden != true' %}
 {% assign latest_posts = visible_posts | slice: 0, 2 %}
-{% assign home_sections = '周报|技术与学习|力扣|面试相关' | split: '|' %}
+{% assign home_sections = '周报|技术与学习|力扣|面试相关|杂项' | split: '|' %}
 
 <div class="home-dashboard">
   <header class="home-hero">
@@ -39,7 +39,7 @@ layout: default
             <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: '%Y.%m.%d' }}</time>
           </div>
           <h3>{{ post.title }}</h3>
-          <p>{{ post_summary | strip | truncate: 112 }}</p>
+          <p>{{ post_summary | strip_html | normalize_whitespace | truncate: 112 | escape }}</p>
           <span class="home-card-link">阅读全文 <span aria-hidden="true">→</span></span>
         </a>
       {% endfor %}
@@ -66,13 +66,7 @@ layout: default
               <a href="{{ post.url | relative_url }}">
                 <span class="home-list-main">
                   <strong>{{ post.title }}</strong>
-                  {% if post.tags.size > 0 %}
-                    <span class="home-list-tags">
-                      {% for tag in post.tags limit: 3 %}
-                        {{ tag }}{% unless forloop.last %}<span aria-hidden="true"> · </span>{% endunless %}
-                      {% endfor %}
-                    </span>
-                  {% endif %}
+                  <span class="home-list-summary">{{ post.description | default: post.excerpt | strip_html | normalize_whitespace | truncate: 96 | escape }}</span>
                 </span>
                 <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: '%m.%d' }}</time>
               </a>

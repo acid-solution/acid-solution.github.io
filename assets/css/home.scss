@@ -204,7 +204,16 @@
   transition: color 160ms ease;
 }
 
-.home-list-tags,
+.home-list-summary {
+  display: -webkit-box;
+  overflow: hidden;
+  color: var(--text-muted-color);
+  font-size: 0.84rem;
+  line-height: 1.65;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
 .home-post-list time {
   color: var(--text-muted-color);
   font-size: 0.74rem;
