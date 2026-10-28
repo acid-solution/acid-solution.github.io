@@ -1,7 +1,7 @@
 ---
 title: "一次网络请求的代理之旅：串起机场、DNS、代理协议与翻墙原理"
 date: 2026-10-25 17:00:00 +0800
-categories: [计算机网络]
+categories: [技术与学习]
 tags: [proxy, dns, networking, mihomo]
 description: "跟着一次 HTTPS 请求，理解代理、机场、DNS、分流、代理协议与网络排障。附按讲述顺序排列的可跳转术语索引。"
 permalink: /posts/proxy-network-request/

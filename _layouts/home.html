@@ -1,0 +1,86 @@
+---
+layout: default
+---
+
+{% include lang.html %}
+
+{% assign empty_posts = '' | split: '' %}
+{% assign visible_posts = site.posts | where_exp: 'post', 'post.hidden != true' %}
+{% assign latest_posts = visible_posts | slice: 0, 2 %}
+{% assign home_sections = '周报|技术与学习|力扣|面试相关' | split: '|' %}
+
+<div class="home-dashboard">
+  <header class="home-hero">
+    <p class="home-kicker">ACID SOLUTION</p>
+    <h1>{{ site.title }}</h1>
+    <p class="home-intro">记录周报、技术学习、力扣题解与面试复盘。</p>
+  </header>
+
+  <section class="home-block" aria-labelledby="latest-posts-heading">
+    <div class="home-section-heading">
+      <div>
+        <p class="home-section-kicker">LATEST</p>
+        <h2 id="latest-posts-heading">最新文章</h2>
+      </div>
+      <a class="home-view-all" href="{{ '/archives/' | relative_url }}">查看归档 <span aria-hidden="true">↗</span></a>
+    </div>
+
+    <div class="home-latest-grid">
+      {% for post in latest_posts %}
+        {% capture post_summary %}
+          {% if post.description %}
+            {{ post.description }}
+          {% else %}
+            {{ post.excerpt | strip_html | strip_newlines }}
+          {% endif %}
+        {% endcapture %}
+        <a class="home-latest-card" href="{{ post.url | relative_url }}">
+          <div class="home-card-meta">
+            <span>{{ post.categories | first }}</span>
+            <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: '%Y.%m.%d' }}</time>
+          </div>
+          <h3>{{ post.title }}</h3>
+          <p>{{ post_summary | strip | truncate: 112 }}</p>
+          <span class="home-card-link">阅读全文 <span aria-hidden="true">→</span></span>
+        </a>
+      {% endfor %}
+    </div>
+  </section>
+
+  {% for section_name in home_sections %}
+    {% assign section_posts = site.categories[section_name] | default: empty_posts %}
+    {% assign section_posts = section_posts | where_exp: 'post', 'post.hidden != true' %}
+    {% if section_posts.size > 0 %}
+      {% capture category_path %}/categories/{{ section_name | slugify | url_encode }}/{% endcapture %}
+      <section class="home-block home-category" aria-labelledby="section-{{ forloop.index }}-heading">
+        <div class="home-section-heading">
+          <div>
+            <p class="home-section-kicker">SECTION {{ forloop.index | prepend: '0' }}</p>
+            <h2 id="section-{{ forloop.index }}-heading">{{ section_name }}</h2>
+          </div>
+          <a class="home-view-all" href="{{ category_path | relative_url }}">查看全部 <span aria-hidden="true">↗</span></a>
+        </div>
+
+        <ul class="home-post-list">
+          {% for post in section_posts limit: 6 %}
+            <li>
+              <a href="{{ post.url | relative_url }}">
+                <span class="home-list-main">
+                  <strong>{{ post.title }}</strong>
+                  {% if post.tags.size > 0 %}
+                    <span class="home-list-tags">
+                      {% for tag in post.tags limit: 3 %}
+                        {{ tag }}{% unless forloop.last %}<span aria-hidden="true"> · </span>{% endunless %}
+                      {% endfor %}
+                    </span>
+                  {% endif %}
+                </span>
+                <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: '%m.%d' }}</time>
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
+      </section>
+    {% endif %}
+  {% endfor %}
+</div>
